@@ -1,12 +1,16 @@
+import "./Ownable.sol";
 pragma solidity >=0.4.22 <0.8.0;
 
-contract One {
+contract One is Ownable {
     uint balance;
+    uint wager;
+    address payable public owner;
+    address payable public player1;
+    address payable public player2;
     string message;
-    address payable owner;
     address[] winnerList;
     
-    constructor() public{
+    constructor() public {
         owner = msg.sender;
     }
     
@@ -24,8 +28,7 @@ contract One {
         return now % 2;
     }
     
-    function setMessage(string memory newMessage) public onlyOwner payable costs(1 ether) {
-        require(msg.value >= 1 ether);
+    function setMessage(string memory newMessage) public payable costs(1 ether) {
         message = newMessage;
         balance += msg.value;
     }
@@ -39,39 +42,47 @@ contract One {
     }
     
     function payMe(address payable to) public returns(uint) {
-        uint toTransfer = balance;
-        balance = 0;
+        uint toTransfer = wager;
+        wager = 0;
         
         to.transfer(toTransfer);
         return toTransfer;
     }
     
-    function transfer(address payable to, uint256 amount) public {
-        to.transfer(amount);
+    function transfer(address payable to, uint amount) public returns(uint) {
+        uint toTransfer = amount;
+        to.transfer(toTransfer);
+        return toTransfer;
     }
     
-    function coinFlip() public payable costs(1 ether) {
-        balance += msg.value;
+    function makeWager() payable public returns(bool) {
+        wager = msg.value;
+        player1 = msg.sender;
+        return true;
+    }
+    
+    function acceptWager() payable public returns(bool) {
+        if(msg.value == wager) {
+            player2 = msg.sender;
+            return true;
+        }
+    }
+    
+    function coinFlip() public payable {
             if(random() == 0) {
-            payMe(msg.sender);
+                payMe(player1);
+            } else {
+                payMe(player2);
             }
+    }
+    
+    function doubleFlip() public payable costs(20 ether) {
+        balance += msg.value;
             payMe(owner);
     }
     
-    function doubleFlip() public payable costs(2 ether) {
-        balance += msg.value;
-            if(random() == 0) {
-            payMe(msg.sender);
-            } 
-            payMe(owner);
-    }
+    function tripleFlip() public payable costs(20 ether) {
     
-    function tripleFlip() public payable costs(3 ether) {
-        balance += msg.value;
-            if(random() == 0) {
-            payMe(msg.sender);
-            } 
-            payMe(owner);
     }
     
 }

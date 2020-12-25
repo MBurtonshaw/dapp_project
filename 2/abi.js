@@ -8,6 +8,21 @@ var abi = [
     {
       "constant": true,
       "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address payable",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
       "name": "random",
       "outputs": [
         {
@@ -66,24 +81,15 @@ var abi = [
       "type": "function"
     },
     {
-      "constant": true,
-      "inputs": [],
-      "name": "getWinners",
-      "outputs": [
+      "constant": false,
+      "inputs": [
         {
-          "internalType": "address[]",
-          "name": "",
-          "type": "address[]"
+          "internalType": "address payable",
+          "name": "to",
+          "type": "address"
         }
       ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [],
-      "name": "payout",
+      "name": "payMe",
       "outputs": [
         {
           "internalType": "uint256",
@@ -97,15 +103,20 @@ var abi = [
     },
     {
       "constant": false,
-      "inputs": [],
-      "name": "ownerPayout",
-      "outputs": [
+      "inputs": [
+        {
+          "internalType": "address payable",
+          "name": "to",
+          "type": "address"
+        },
         {
           "internalType": "uint256",
-          "name": "",
+          "name": "amount",
           "type": "uint256"
         }
       ],
+      "name": "transfer",
+      "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
       "type": "function"
@@ -114,6 +125,24 @@ var abi = [
       "constant": false,
       "inputs": [],
       "name": "coinFlip",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "doubleFlip",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "tripleFlip",
       "outputs": [],
       "payable": true,
       "stateMutability": "payable",
