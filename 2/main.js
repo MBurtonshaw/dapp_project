@@ -6,7 +6,7 @@ var owner;
 
 $(document).ready(function() {
     window.ethereum.enable().then(function(accounts){
-      contractInstance = new web3.eth.Contract(window.abi, "0x46B72f66B57715227B4a896ABDCf397C47Fb0869", {from: accounts[0]});
+      contractInstance = new web3.eth.Contract(window.abi, "0xFe762606CA857c54C331e0A2AF3aD5Ec51f9a21a", {from: accounts[0]});
         owner = accounts[0];
     });
     $("body").css("backgroundColor", "rgb(1, 14, 6)");
