@@ -3,7 +3,6 @@ pragma solidity >=0.4.22 <0.8.0;
 
 contract One is Ownable {
     uint balance;
-    uint wager;
     address payable public owner;
     address payable public player1;
     address payable public player2;
@@ -41,48 +40,37 @@ contract One is Ownable {
         return message;
     }
     
-    function payMe(address payable to) public returns(uint) {
-        uint toTransfer = wager;
-        wager = 0;
-        
-        to.transfer(toTransfer);
-        return toTransfer;
-    }
-    
     function transfer(address payable to, uint amount) public returns(uint) {
         uint toTransfer = amount;
         to.transfer(toTransfer);
         return toTransfer;
     }
     
-    function makeWager() payable public returns(bool) {
-        wager = msg.value;
-        player1 = msg.sender;
-        return true;
-    }
-    
-    function acceptWager() payable public returns(bool) {
-        if(msg.value == wager) {
-            player2 = msg.sender;
-            return true;
+    function coinFlip() public payable costs(1 ether) {
+        balance += msg.value;
+        if(random() == 0) {
+            transfer(msg.sender, 2 ether);
+        } else {
+            transfer(owner, 1 ether);
         }
     }
     
-    function coinFlip() public payable {
-            if(random() == 0) {
-                payMe(player1);
-            } else {
-                payMe(player2);
-            }
-    }
-    
-    function doubleFlip() public payable costs(20 ether) {
+    function doubleFlip() public payable costs(2 ether) {
         balance += msg.value;
-            payMe(owner);
+        if(random() == 0) {
+            transfer(msg.sender, 4 ether);
+        } else {
+            transfer(owner, 2 ether);
+        }
     }
     
-    function tripleFlip() public payable costs(20 ether) {
-    
+    function tripleFlip() public payable costs(3 ether) {
+        balance += msg.value;
+        if(random() == 0) {
+            transfer(msg.sender, 6 ether);
+        } else {
+            transfer(owner, 3 ether);
+        }
     }
     
 }

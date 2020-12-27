@@ -6,8 +6,8 @@ var owner;
 
 $(document).ready(function() {
     window.ethereum.enable().then(function(accounts){
-      contractInstance = new web3.eth.Contract(window.abi, "0xFe762606CA857c54C331e0A2AF3aD5Ec51f9a21a", {from: accounts[0]});
-        owner = accounts[0];
+      contractInstance = new web3.eth.Contract(window.abi, "0x47BA2fAa9E4102FF26d64e323ac4284D31d3105B", {from: accounts[0]});
+        
     });
     $("body").css("backgroundColor", "rgb(1, 14, 6)");
     $("#container").css("color", "white");
@@ -41,7 +41,7 @@ $(document).ready(function() {
     $(".button").css("border", "1px solid black");
     $(".button").css("padding", "5px 12px 5px 12px");
     $(".button").css("border-radius", "8%");
-    
+    /////////////////////////////////////////////////////////////////////////
     if (window.innerWidth < 900) {
             $("#container").css("padding-top", "2em");
             $("#button_div").css("display", "block");
@@ -50,11 +50,9 @@ $(document).ready(function() {
             $("#2_div").css("padding-bottom", "4em");
             $("#3_div").css("padding-bottom", "4em");
         }
-    
+    /////////////////////////////////////////////////////////////////////////
     $("#button_1").click(() => {
-        makeWager();
-        acceptWager();
-        flip();
+        coinFlip();
     });
     
     $("#button_2").click(() => {
@@ -65,22 +63,14 @@ $(document).ready(function() {
         tripleFlip();
     });
 });
+////////////////////////////////////////////////////////////////////////////
 
-function makeWager() {
-    contractInstance.methods.makeWager().send({value: web3.utils.toWei("1", "ether")});
-}
-function acceptWager() {
-    contractInstace.methods.acceptWager().send({value: web3.utils.toWei("1", "ether"), from: owner});
-}
-function flip() {
-    contractInstance.methods.coinFlip();
+function coinFlip() {
+    contractInstance.methods.coinFlip().send({value: web3.utils.toWei("1", "ether")});
 }
 function doubleFlip() {
-    contractInstance.methods.doubleFlip().send({value: web3.utils.toWei("20", "ether")});
+    contractInstance.methods.doubleFlip().send({value: web3.utils.toWei("2", "ether")});
 }
 function tripleFlip() {
-    contractInstance.methods.coinFlip().send({value: web3.utils.toWei("20", "ether")});
-}
-function restock() {
-    contractInstance.methods.doubleFlip().send({value: web3.utils.toWei("20", "ether")});
+    contractInstance.methods.tripleFlip().send({value: web3.utils.toWei("3", "ether")});
 }
