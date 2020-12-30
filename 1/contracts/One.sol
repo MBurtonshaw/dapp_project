@@ -1,7 +1,6 @@
-import "./Ownable.sol";
 pragma solidity >=0.4.22 <0.8.0;
 
-contract One is Ownable {
+contract One {
     uint balance;
     address payable public owner;
     address payable public player1;
